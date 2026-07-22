@@ -1,5 +1,6 @@
 package com.task_project_manager.springboot.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
+    @JsonIgnoreProperties("tasks") // Stops Infinite JSON Loop!
     private Project project;
 
 

@@ -2,10 +2,13 @@ package com.task_project_manager.springboot.Repositories;
 
 import com.task_project_manager.springboot.Entities.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 
-import java.util.Optional;
+public interface TaskRepo extends JpaRepository<Task, Integer> {
 
-public interface TaskRepo extends JpaRepository<Task,Integer> {
-    List<Task> findByProjectP_id(int projectId);
+    @Query("SELECT t FROM Task t WHERE t.project.p_id = :projectId")
+    List<Task> findByProjectP_id(@Param("projectId") int projectId);
 }

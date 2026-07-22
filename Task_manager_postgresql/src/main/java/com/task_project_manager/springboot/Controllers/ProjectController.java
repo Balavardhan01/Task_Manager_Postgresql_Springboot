@@ -12,6 +12,9 @@ import java.util.List;
 @RequestMapping("/api/projects")
 public class ProjectController {
     private ProjectService service;
+    public ProjectController(ProjectService service) {
+        this.service = service;
+    }
 
 
     @PostMapping
