@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,12 +35,12 @@ public class TaskService {
 
 
     // 2. Fetch all tasks for a specific project
-    public Optional<Task> getTasksByProjectId(int projectId) {
+    public List<Task> getTasksByProjectId(int projectId) {
         if (!prepo.existsById(projectId)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Project not found with id: " + projectId);
         }
-        return trepo.findById(projectId);
+        return trepo.findByProjectP_id(projectId);
     }
 
     // 3. Update task status (true/false)

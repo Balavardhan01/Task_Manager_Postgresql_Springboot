@@ -4,10 +4,7 @@ import com.task_project_manager.springboot.Entities.Project;
 import com.task_project_manager.springboot.Service.ProjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,14 +12,29 @@ import java.util.List;
 @RequestMapping("/api/projects")
 public class ProjectController {
     private ProjectService service;
+
+
     @PostMapping
-    public ResponseEntity<Project> createProject(Project project){
+    public ResponseEntity<Project> createProject(@RequestBody Project project){
        Project created= service.createProject(project);
-       return ResponseEntity.status(HttpStatus.CREATED).body(created);
+       return new ResponseEntity<>(created,HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<Project>> getAllProjects(){
-        return service.getAllProjects();
+        List<Project> projects=service.getAllProjects();
+        return ResponseEntity.ok(projects);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Project> getProjectById(@PathVariable int id){
+        Project project= service.getProjectById(id);
+        return ResponseEntity.ok(project);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable int id){
+        service.deleteProject(id);
+        return ResponseEntity.noContent().build();
     }
 }
